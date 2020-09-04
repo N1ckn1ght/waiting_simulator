@@ -30,16 +30,12 @@ bool is_solved(vector <int>& ctb, int level) {
 void build(int n, vector <double>& x, vector <double>& y, vector <int>& ctb, double& minimal) {
 	for (int i = 0; i < n; i++) {
 		ctb.push_back(i);
+		// is_solved проверяет, чтобы в претендентах не было вариантов, где >1 КТ соединена с 1 СТ
 		if (is_solved(ctb, ctb.size())) {
 			if (ctb.size() == n) {
 				double len = 0;
 				for (int j = 0; j < n; j++) {
 					len += distance(x[j], y[j], x[ctb[j] + n], y[ctb[j] + n]);
-					/*cout << "znacheniya, j: " << j << ", ctb[j]: " << ctb[j] << endl;
-					cout << "\tx[j]: " << x[j] << ", y[j]: " << y[j] << ", x[ctb[j] + n]: " 
-						<< x[ctb[j] + n] << ", y[ctb[j] + n]: " << y[ctb[j] + n] << endl;
-					cout << "DEBUG, distance = " << distance(x[j], y[j], x[ctb[j] + n], y[ctb[j] + n]);
-					cout << ", length = " << len << endl;*/
 				}
 				if (len < minimal) {
 					minimal = len;
@@ -47,6 +43,7 @@ void build(int n, vector <double>& x, vector <double>& y, vector <int>& ctb, dou
 				}
 			}
 			else {
+				// рекурсивный перебор
 				build(n, x, y, ctb, minimal);
 			}
 		}
